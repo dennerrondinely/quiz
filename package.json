@@ -1,9 +1,9 @@
 {
-  "name": "ai-react-starter",
+  "name": "Quiz",
   "private": true,
   "version": "0.1.0",
   "type": "module",
-  "description": "React/Vite template optimized for AI-assisted development with Spec-Driven Development",
+  "description": "Test your knowledge of AI development concepts",
   "scripts": {
     "dev": "vite",
     "build": "vite build && tsc -b",

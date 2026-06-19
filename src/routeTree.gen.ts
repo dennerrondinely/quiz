@@ -9,16 +9,10 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as TodosRouteImport } from './routes/todos'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ResultsCategoryIdRouteImport } from './routes/results.$categoryId'
 import { Route as QuizCategoryIdRouteImport } from './routes/quiz.$categoryId'
 
-const TodosRoute = TodosRouteImport.update({
-  id: '/todos',
-  path: '/todos',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -37,47 +31,36 @@ const QuizCategoryIdRoute = QuizCategoryIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/todos': typeof TodosRoute
   '/quiz/$categoryId': typeof QuizCategoryIdRoute
   '/results/$categoryId': typeof ResultsCategoryIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/todos': typeof TodosRoute
   '/quiz/$categoryId': typeof QuizCategoryIdRoute
   '/results/$categoryId': typeof ResultsCategoryIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/todos': typeof TodosRoute
   '/quiz/$categoryId': typeof QuizCategoryIdRoute
   '/results/$categoryId': typeof ResultsCategoryIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/todos' | '/quiz/$categoryId' | '/results/$categoryId'
+  fullPaths: '/' | '/quiz/$categoryId' | '/results/$categoryId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/todos' | '/quiz/$categoryId' | '/results/$categoryId'
-  id: '__root__' | '/' | '/todos' | '/quiz/$categoryId' | '/results/$categoryId'
+  to: '/' | '/quiz/$categoryId' | '/results/$categoryId'
+  id: '__root__' | '/' | '/quiz/$categoryId' | '/results/$categoryId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  TodosRoute: typeof TodosRoute
   QuizCategoryIdRoute: typeof QuizCategoryIdRoute
   ResultsCategoryIdRoute: typeof ResultsCategoryIdRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/todos': {
-      id: '/todos'
-      path: '/todos'
-      fullPath: '/todos'
-      preLoaderRoute: typeof TodosRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/': {
       id: '/'
       path: '/'
@@ -104,7 +87,6 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  TodosRoute: TodosRoute,
   QuizCategoryIdRoute: QuizCategoryIdRoute,
   ResultsCategoryIdRoute: ResultsCategoryIdRoute,
 }

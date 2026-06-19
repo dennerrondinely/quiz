@@ -20,6 +20,7 @@ _(none)_
 
 | ID | Feature | Completed |
 |----|---------|----------|
+| 004 | [Remove Todos Feature](004-remove-todos/spec.md) | 2026-06-19 |
 | 003 | [Attempt History, User Profile, and Visual Polish](003-history-profile-polish/spec.md) | 2026-06-19 |
 | 002 | [Complete Quiz Experience](002-quiz-experience/spec.md) | 2026-06-19 |
 | 001 | [Quiz Data Layer](001-quiz-data-layer/spec.md) | 2026-06-19 |
