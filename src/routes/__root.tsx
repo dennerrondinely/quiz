@@ -14,14 +14,7 @@ function RootLayout() {
       <header className="border-b">
         <nav className="container mx-auto flex items-center gap-4 px-4 py-3 text-sm">
           <Link to="/" className="font-semibold">
-            AI React Starter
-          </Link>
-          <Link
-            to="/todos"
-            className="text-muted-foreground hover:text-foreground"
-            activeProps={{ className: 'text-foreground font-medium' }}
-          >
-            Todos
+            AI Development Quiz
           </Link>
         </nav>
       </header>

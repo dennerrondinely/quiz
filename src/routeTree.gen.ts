@@ -11,6 +11,8 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as TodosRouteImport } from './routes/todos'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ResultsCategoryIdRouteImport } from './routes/results.$categoryId'
+import { Route as QuizCategoryIdRouteImport } from './routes/quiz.$categoryId'
 
 const TodosRoute = TodosRouteImport.update({
   id: '/todos',
@@ -22,31 +24,49 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ResultsCategoryIdRoute = ResultsCategoryIdRouteImport.update({
+  id: '/results/$categoryId',
+  path: '/results/$categoryId',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const QuizCategoryIdRoute = QuizCategoryIdRouteImport.update({
+  id: '/quiz/$categoryId',
+  path: '/quiz/$categoryId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/todos': typeof TodosRoute
+  '/quiz/$categoryId': typeof QuizCategoryIdRoute
+  '/results/$categoryId': typeof ResultsCategoryIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/todos': typeof TodosRoute
+  '/quiz/$categoryId': typeof QuizCategoryIdRoute
+  '/results/$categoryId': typeof ResultsCategoryIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/todos': typeof TodosRoute
+  '/quiz/$categoryId': typeof QuizCategoryIdRoute
+  '/results/$categoryId': typeof ResultsCategoryIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/todos'
+  fullPaths: '/' | '/todos' | '/quiz/$categoryId' | '/results/$categoryId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/todos'
-  id: '__root__' | '/' | '/todos'
+  to: '/' | '/todos' | '/quiz/$categoryId' | '/results/$categoryId'
+  id: '__root__' | '/' | '/todos' | '/quiz/$categoryId' | '/results/$categoryId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   TodosRoute: typeof TodosRoute
+  QuizCategoryIdRoute: typeof QuizCategoryIdRoute
+  ResultsCategoryIdRoute: typeof ResultsCategoryIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -65,12 +85,28 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/results/$categoryId': {
+      id: '/results/$categoryId'
+      path: '/results/$categoryId'
+      fullPath: '/results/$categoryId'
+      preLoaderRoute: typeof ResultsCategoryIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/quiz/$categoryId': {
+      id: '/quiz/$categoryId'
+      path: '/quiz/$categoryId'
+      fullPath: '/quiz/$categoryId'
+      preLoaderRoute: typeof QuizCategoryIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   TodosRoute: TodosRoute,
+  QuizCategoryIdRoute: QuizCategoryIdRoute,
+  ResultsCategoryIdRoute: ResultsCategoryIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
