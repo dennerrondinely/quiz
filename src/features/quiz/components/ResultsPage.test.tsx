@@ -9,11 +9,14 @@ import {
 } from '@tanstack/react-router';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { toast } from 'sonner';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { ResultsPage } from '@/features/quiz/components/ResultsPage';
 import { useQuizSessionStore } from '@/features/quiz/session-store';
 import { useQuizHistoryStore } from '@/features/quiz/store';
 import { agentFundamentalsFixture } from '@/test/msw/handlers';
+
+vi.mock('sonner', () => ({ toast: { success: vi.fn() } }));
 
 function createTestQueryClient() {
   return new QueryClient({
@@ -66,6 +69,7 @@ async function setup({ categoryId = agentFundamentalsFixture.id, session = ACTIV
 }
 
 beforeEach(() => {
+  vi.mocked(toast.success).mockClear();
   useQuizHistoryStore.setState({ attempts: [] });
   useQuizSessionStore.setState({
     currentCategoryId: null,
@@ -139,6 +143,16 @@ describe('ResultsPage', () => {
 
     // Then — expanded
     expect(screen.getByText(agentFundamentalsFixture.questions[0].question)).toBeInTheDocument();
+  });
+
+  it('fires a success toast with the score percentage on mount', async () => {
+    // Given / When — 2 of 2 correct → 100%
+    await setup();
+    await screen.findByText(/correct/i);
+
+    // Then
+    await waitFor(() => expect(toast.success).toHaveBeenCalledTimes(1));
+    expect(toast.success).toHaveBeenCalledWith(expect.stringContaining('100%'));
   });
 
   it('Retake Quiz calls resetSession and navigates to quiz', async () => {

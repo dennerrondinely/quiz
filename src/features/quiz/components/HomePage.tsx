@@ -1,6 +1,7 @@
 import { z } from 'zod';
 import { CategoryCard } from '@/features/quiz/components/CategoryCard';
 import { CategoryCardSkeleton } from '@/features/quiz/components/CategoryCardSkeleton';
+import { RecentAttempts } from '@/features/quiz/components/RecentAttempts';
 import { useCategories } from '@/features/quiz/hooks/useCategories';
 import { useQuizHistoryStore } from '@/features/quiz/store';
 import { Route as HomeRoute } from '@/routes/index';
@@ -26,6 +27,7 @@ export function HomePage() {
   const { error } = HomeRoute.useSearch() as HomeSearch;
   const { data: categories, isPending, isError, refetch } = useCategories();
   const getAttemptsByCategory = useQuizHistoryStore((s) => s.getAttemptsByCategory);
+  const allAttempts = useQuizHistoryStore((s) => s.attempts);
 
   return (
     <section className="space-y-8">
@@ -71,6 +73,8 @@ export function HomePage() {
           ))}
         </div>
       )}
+
+      {allAttempts.length > 0 && <RecentAttempts attempts={allAttempts} categories={categories} />}
     </section>
   );
 }

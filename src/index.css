@@ -41,6 +41,23 @@
   --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 }
 
+@keyframes quiz-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@layer utilities {
+  .animate-fade-in {
+    animation: quiz-fade-in 0.2s ease-out both;
+  }
+}
+
 @layer base {
   * {
     border-color: var(--color-border);

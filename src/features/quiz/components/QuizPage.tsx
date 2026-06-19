@@ -60,12 +60,14 @@ export function QuizPage({ categoryId }: QuizPageProps) {
         </p>
       </header>
 
-      <QuestionCard
-        question={question}
-        isAnswered={isAnswered}
-        pendingAnswer={pendingAnswer}
-        onAnswer={handleAnswer}
-      />
+      <div key={currentQuestionIndex} className="animate-fade-in motion-reduce:animate-none">
+        <QuestionCard
+          question={question}
+          isAnswered={isAnswered}
+          pendingAnswer={pendingAnswer}
+          onAnswer={handleAnswer}
+        />
+      </div>
 
       {isAnswered && (
         <div className="flex flex-col gap-4">

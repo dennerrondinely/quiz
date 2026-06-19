@@ -1,5 +1,6 @@
 import { Link, useNavigate } from '@tanstack/react-router';
 import { useEffect, useRef } from 'react';
+import { toast } from 'sonner';
 import { AnswerReview } from '@/features/quiz/components/AnswerReview';
 import { getPerformanceFeedback } from '@/features/quiz/components/get-performance-feedback';
 import { useCategories } from '@/features/quiz/hooks/useCategories';
@@ -34,6 +35,8 @@ export function ResultsPage({ categoryId }: ResultsPageProps) {
         (count, answer, i) => count + (answer === category.questions[i]?.correctAnswer ? 1 : 0),
         0,
       );
+      const pct =
+        category.questions.length === 0 ? 0 : Math.round((score / category.questions.length) * 100);
       addAttempt({
         categoryId,
         completedAt: new Date().toISOString(),
@@ -41,6 +44,7 @@ export function ResultsPage({ categoryId }: ResultsPageProps) {
         total: category.questions.length,
         answers,
       });
+      toast.success(`Quiz complete! Score: ${pct}%`);
     }
   }, [isSessionActive, category, answers, categoryId, addAttempt]);
 
