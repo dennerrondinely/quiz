@@ -34,9 +34,7 @@ export function TodoList({ query = '' }: TodoListProps) {
   if (filtered.length === 0) {
     return (
       <p role="status" aria-live="polite" className="text-sm text-muted-foreground">
-        {normalizedQuery
-          ? `No todos found for "${query.trim()}".`
-          : 'No todos found.'}
+        {normalizedQuery ? `No todos found for "${query.trim()}".` : 'No todos found.'}
       </p>
     );
   }
