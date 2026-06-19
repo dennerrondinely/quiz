@@ -1,0 +1,8 @@
+// Proíbe imports de `axios` fora dos wrappers compartilhados.
+// Use `httpClient` de @/shared/lib/http; a única exceção legítima é o mutator do Orval.
+
+language js
+
+`import $stuff from "axios"` where {
+  register_diagnostic(span=$match, message="Não importe `axios` direto. Use `httpClient` de @/shared/lib/http.", severity="error")
+}

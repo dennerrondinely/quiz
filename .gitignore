@@ -1,0 +1,50 @@
+# dependencies
+node_modules
+.pnp
+.pnp.js
+
+# build
+dist
+dist-ssr
+*.local
+build
+
+# editors
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+.idea
+*.swp
+*.swo
+.DS_Store
+
+# logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# env
+.env
+.env.*
+!.env.example
+
+# testing
+coverage
+playwright-report
+playwright/.cache
+test-results
+.vitest-cache
+
+# generated (regenerate via npm run api:gen / TanStack Router plugin)
+# DO NOT commit if you prefer to regenerate on CI:
+# src/routeTree.gen.ts
+# src/shared/api/generated
+
+# msw worker (committed; regenerate via `npx msw init public/`)
+# public/mockServiceWorker.js
+
+# Configuração local (tokens pessoais, MCP)
+.claude/settings.local.json

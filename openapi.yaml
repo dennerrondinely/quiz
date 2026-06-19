@@ -1,0 +1,198 @@
+openapi: 3.0.3
+info:
+  title: Quiz API
+  description: |
+    Quiz management API backed by MockAPI.
+    Run `npm run api:gen` after any change to regenerate types and hooks via Orval.
+  version: 1.0.0
+servers:
+  - url: https://6a3462338248ee962fa55f42.mockapi.io
+    description: MockAPI server
+
+tags:
+  - name: quiz
+    description: Quiz operations
+
+paths:
+  /quiz:
+    get:
+      summary: List all quizzes
+      operationId: listQuizzes
+      tags: [quiz]
+      responses:
+        '200':
+          description: Array of quizzes
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Quiz'
+
+    post:
+      summary: Create a quiz
+      operationId: createQuiz
+      tags: [quiz]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateQuizInput'
+      responses:
+        '201':
+          description: Quiz created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Quiz'
+
+  /quiz/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: Quiz identifier
+        schema:
+          type: string
+
+    get:
+      summary: Get a quiz by ID
+      operationId: getQuiz
+      tags: [quiz]
+      responses:
+        '200':
+          description: Quiz found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Quiz'
+        '404':
+          description: Quiz not found
+
+    put:
+      summary: Update a quiz
+      operationId: updateQuiz
+      tags: [quiz]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateQuizInput'
+      responses:
+        '200':
+          description: Quiz updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Quiz'
+        '404':
+          description: Quiz not found
+
+    delete:
+      summary: Delete a quiz
+      operationId: deleteQuiz
+      tags: [quiz]
+      responses:
+        '200':
+          description: Quiz deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Quiz'
+        '404':
+          description: Quiz not found
+
+components:
+  schemas:
+
+    Question:
+      type: object
+      required: [id, question, options, correctAnswer, explanation]
+      properties:
+        id:
+          type: integer
+          description: Question number (1-based)
+          example: 1
+        question:
+          type: string
+          description: Question text
+          example: What is the primary purpose of an AI agent?
+        options:
+          type: array
+          description: Answer choices (at least 2)
+          minItems: 2
+          items:
+            type: string
+          example:
+            - To replace human workers
+            - To autonomously perform tasks and make decisions
+            - To store large amounts of data
+            - To create visual interfaces
+        correctAnswer:
+          type: integer
+          description: Zero-based index of the correct option
+          minimum: 0
+          example: 1
+        explanation:
+          type: string
+          description: Explanation shown after answering
+          example: AI agents are designed to autonomously perform tasks and make decisions.
+
+    QuestionInput:
+      type: object
+      required: [question, options, correctAnswer, explanation]
+      properties:
+        question:
+          type: string
+          minLength: 1
+        options:
+          type: array
+          minItems: 2
+          items:
+            type: string
+        correctAnswer:
+          type: integer
+          minimum: 0
+          description: Zero-based index of the correct option
+        explanation:
+          type: string
+          minLength: 1
+
+    Quiz:
+      type: object
+      required: [id, title, description, questions]
+      properties:
+        id:
+          type: string
+          description: Unique quiz identifier (auto-assigned by the server)
+          example: agent-fundamentals
+        title:
+          type: string
+          example: Agent Fundamentals
+        description:
+          type: string
+          example: Test your knowledge of AI agent design and implementation
+        questions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Question'
+
+    CreateQuizInput:
+      type: object
+      required: [title, description, questions]
+      properties:
+        title:
+          type: string
+          minLength: 1
+          example: Agent Fundamentals
+        description:
+          type: string
+          minLength: 1
+          example: Test your knowledge of AI agent design and implementation
+        questions:
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/QuestionInput'

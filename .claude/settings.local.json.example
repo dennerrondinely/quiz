@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "mcpServers": {
+    "figma": {
+      "command": "npx",
+      "args": ["-y", "@figma/mcp"],
+      "env": {
+        "FIGMA_ACCESS_TOKEN": "figd_REPLACE_WITH_YOUR_TOKEN"
+      }
+    }
+  }
+}
