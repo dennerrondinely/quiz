@@ -7,8 +7,12 @@ Run `npm run api:gen` after any change to regenerate types and hooks via Orval.
 
  * OpenAPI spec version: 1.0.0
  */
+import type { Question } from './question';
 
-export * from './createQuizInput';
-export * from './question';
-export * from './questionInput';
-export * from './quiz';
+export interface Quiz {
+  /** Unique quiz identifier (auto-assigned by the server) */
+  id: string;
+  title: string;
+  description: string;
+  questions: Question[];
+}
